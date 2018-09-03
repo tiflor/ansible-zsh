@@ -1,0 +1,22 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.synced_folder "../", "/etc/ansible/roles/test_role"
+
+  config.vm.provision "shell", inline: <<-SHELL
+     apt-add-repository ppa:ansible/ansible
+     apt-get update
+     apt-get install -y software-properties-common ansible
+     #apt-get -y dist-upgrade
+  SHELL
+
+  config.vm.provision "ansible_local", run: "always" do |ansible|
+    ansible.verbose        = true
+    ansible.install        = false
+    ansible.limit          = "localhost" # or only "nodes" group, etc.
+    ansible.inventory_path = "inventory"
+    ansible.playbook = "test.yml"
+
+  end
+
+end
+ 
