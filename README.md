@@ -24,7 +24,7 @@ Example Playbook
 
     - hosts: localhost
       roles:
-         - { role: tiflor.ansible-zsh }
+         - { role: tiflor.ansible_zsh }
 
 License
 -------
